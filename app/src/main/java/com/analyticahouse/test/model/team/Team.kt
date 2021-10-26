@@ -1,9 +1,8 @@
-package com.analyticahouse.test.model
-
+package com.analyticahouse.test.model.team
 
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class Team(
     @SerializedName("abbreviation")
     val abbreviation: String,
     @SerializedName("city")
