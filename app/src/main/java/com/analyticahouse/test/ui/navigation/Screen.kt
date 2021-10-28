@@ -6,6 +6,7 @@ sealed class Screen(val route: String) {
     object TeamDetailScreen : Screen("teamDetailScreen")
     object PlayersScreen : Screen("playersScreen")
     object PlayerDetailScreen : Screen("playerDetailScreen")
+    object FavoritesScreen : Screen("favoritesScreen")
     object FavoriteTeamsScreen : Screen("favoriteTeamsScreen")
     object FavoritePlayersScreen : Screen("favoritePlayersScreen")
 

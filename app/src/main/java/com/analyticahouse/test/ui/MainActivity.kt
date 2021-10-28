@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -22,8 +23,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.analyticahouse.test.ui.navigation.BottomBarItem
 import com.analyticahouse.test.ui.navigation.Screen
+import com.analyticahouse.test.ui.screens.common.AppTopBar
 import com.analyticahouse.test.ui.screens.favorite.FavoritePlayersScreen
 import com.analyticahouse.test.ui.screens.favorite.FavoriteTeamsScreen
+import com.analyticahouse.test.ui.screens.favorite.FavoritesScreen
 import com.analyticahouse.test.ui.screens.player.PlayerDetailScreen
 import com.analyticahouse.test.ui.screens.player.PlayersScreen
 import com.analyticahouse.test.ui.screens.team.TeamDetailScreen
@@ -49,6 +52,9 @@ fun MainScreen(navController: NavHostController) {
     Scaffold(
         bottomBar = {
             AppBottomBar(navController = navController)
+        },
+        topBar = {
+            AppTopBar()
         }
     ) {
         AppNavHost(navController = navController)
@@ -57,12 +63,11 @@ fun MainScreen(navController: NavHostController) {
 
 @Composable
 fun AppBottomBar(navController: NavController) {
-    BottomNavigation(
-        backgroundColor = Color.LightGray,
-    ) {
+    BottomNavigation {
         val items = listOf(
             BottomBarItem("Teams", Screen.TeamsScreen.route, Icons.Default.List),
-            BottomBarItem("Players", Screen.PlayersScreen.route, Icons.Default.Person)
+            BottomBarItem("Players", Screen.PlayersScreen.route, Icons.Default.Person),
+            BottomBarItem("Favorites", Screen.FavoritesScreen.route, Icons.Default.Favorite)
         )
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -107,7 +112,6 @@ fun AppNavHost(navController: NavHostController) {
                 teamId = navBackStackEntry.arguments?.getString("teamId")!!
             )
         }
-        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
         composable(Screen.PlayersScreen.route) { PlayersScreen(navController = navController) }
         composable(
             route = Screen.PlayerDetailScreen.route + "/{playerId}",
@@ -123,6 +127,8 @@ fun AppNavHost(navController: NavHostController) {
                 playerId = navBackStackEntry.arguments?.getString("playerId")!!
             )
         }
+        composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
+        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
         composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen(navController = navController) }
     }
 }
