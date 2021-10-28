@@ -12,16 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.analyticahouse.test.ui.navigation.Screen
-import com.analyticahouse.test.ui.screens.favorite.FavoriteTeamsScreen
 
 @Composable
-fun TeamsScreen() {
+fun TeamsScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -35,9 +29,9 @@ fun TeamsScreen() {
 
             Button(
                 onClick = {
-                    /*navController.navigate(Screen.TeamDetailScreen.withArgs(text)) {
+                    navController.navigate(Screen.TeamDetailScreen.withArgs(text)) {
                         popUpTo(Screen.TeamDetailScreen.route) { inclusive = true }
-                    }*/
+                    }
                 }
             ) {
                 Text(text = "Go To Team Detail Screen")
@@ -45,37 +39,13 @@ fun TeamsScreen() {
             Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
-                    //navController.navigate(Screen.FavoriteTeamsScreen.route)
+                    navController.navigate(Screen.FavoriteTeamsScreen.route) {
+                        popUpTo(Screen.FavoriteTeamsScreen.route) { inclusive = true }
+                    }
                 }
             ) {
                 Text(text = "Go To Favorite Teams Screen")
             }
-        }
-    }
-}
-
-@Composable
-fun TeamsNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screen.TeamsScreen.route) {
-        composable(route = Screen.TeamsScreen.route) {
-            TeamsScreen()
-        }
-        composable(
-            route = Screen.TeamDetailScreen.route + "/{teamId}",
-            arguments = listOf(
-                navArgument("teamId") {
-                    type = NavType.StringType
-                    defaultValue = "1"
-                }
-            )
-        ) { navBackStackEntry ->
-            TeamDetailScreen(
-                navController = navController,
-                teamId = navBackStackEntry.arguments?.getString("teamId")!!
-            )
-        }
-        composable(route = Screen.FavoriteTeamsScreen.route) {
-            FavoriteTeamsScreen(navController = navController)
         }
     }
 }

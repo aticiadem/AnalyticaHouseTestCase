@@ -15,7 +15,7 @@ import androidx.navigation.NavController
 import com.analyticahouse.test.ui.navigation.Screen
 
 @Composable
-fun PlayersScreen() {
+fun PlayersScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -29,7 +29,9 @@ fun PlayersScreen() {
 
             Button(
                 onClick = {
-                   // navController.navigate(Screen.PlayerDetailScreen.withArgs(text))
+                    navController.navigate(Screen.PlayerDetailScreen.withArgs(text)) {
+                        popUpTo(Screen.PlayerDetailScreen.route) { inclusive = true }
+                    }
                 }
             ) {
                 Text(text = "Go To Player Detail Screen")
@@ -37,7 +39,7 @@ fun PlayersScreen() {
             Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
-                   // navController.navigate(Screen.FavoritePlayersScreen.route)
+                    navController.navigate(Screen.FavoritePlayersScreen.route)
                 }
             ) {
                 Text(text = "Go To Favorite Players Screen")
