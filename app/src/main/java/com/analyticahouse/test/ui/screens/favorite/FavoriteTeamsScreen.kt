@@ -19,7 +19,7 @@ fun FavoriteTeamsScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Favorite Teams Screen")
+            Text(text = "Favorite Teams")
         }
     }
 }
