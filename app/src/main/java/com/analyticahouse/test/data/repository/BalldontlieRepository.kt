@@ -1,10 +1,10 @@
-package com.analyticahouse.test.repository
+package com.analyticahouse.test.data.repository
 
 import com.analyticahouse.test.model.player.Player
 import com.analyticahouse.test.model.player.PlayerModel
 import com.analyticahouse.test.model.team.Team
 import com.analyticahouse.test.model.team.TeamModel
-import com.analyticahouse.test.network.BalldontlieAPI
+import com.analyticahouse.test.data.network.BalldontlieAPI
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

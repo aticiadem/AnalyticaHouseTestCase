@@ -1,4 +1,4 @@
-package com.analyticahouse.test.network
+package com.analyticahouse.test.data.network
 
 import com.analyticahouse.test.model.player.Player
 import com.analyticahouse.test.model.player.PlayerModel

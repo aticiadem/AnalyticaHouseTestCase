@@ -1,4 +1,4 @@
-package com.analyticahouse.test.application
+package com.analyticahouse.test
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

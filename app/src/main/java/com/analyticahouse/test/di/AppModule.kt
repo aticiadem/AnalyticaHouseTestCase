@@ -1,7 +1,7 @@
 package com.analyticahouse.test.di
 
-import com.analyticahouse.test.network.BalldontlieAPI
-import com.analyticahouse.test.repository.BalldontlieRepository
+import com.analyticahouse.test.data.network.BalldontlieAPI
+import com.analyticahouse.test.data.repository.BalldontlieRepository
 import com.analyticahouse.test.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides

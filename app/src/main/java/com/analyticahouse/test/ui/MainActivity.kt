@@ -1,4 +1,4 @@
-package com.analyticahouse.test
+package com.analyticahouse.test.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
