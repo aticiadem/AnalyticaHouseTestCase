@@ -18,6 +18,7 @@ class TeamDetailViewModel @Inject constructor(
     private val getTeamByIdUseCase: GetTeamByIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
     private val _state = mutableStateOf(TeamDetailState())
     val state: State<TeamDetailState> = _state
 

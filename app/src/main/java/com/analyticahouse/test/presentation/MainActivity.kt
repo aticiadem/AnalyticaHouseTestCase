@@ -34,6 +34,7 @@ import com.analyticahouse.test.presentation.screens.team.TeamsScreen
 import com.analyticahouse.test.presentation.ui.theme.AnalyticaHouseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(navController: NavHostController) {
     Scaffold(
@@ -94,6 +96,7 @@ fun AppBottomBar(navController: NavController) {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun AppNavHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.TeamsScreen.route) {
@@ -106,11 +109,8 @@ fun AppNavHost(navController: NavHostController) {
                     defaultValue = "1"
                 }
             )
-        ) { navBackStackEntry ->
-            TeamDetailScreen(
-                navController = navController,
-                teamId = navBackStackEntry.arguments?.getString("teamId")!!
-            )
+        ) {
+            TeamDetailScreen()
         }
         composable(Screen.PlayersScreen.route) { PlayersScreen(navController = navController) }
         composable(
@@ -118,14 +118,11 @@ fun AppNavHost(navController: NavHostController) {
             arguments = listOf(
                 navArgument("playerId") {
                     type = NavType.StringType
-                    defaultValue = "2"
+                    defaultValue = "14"
                 }
             )
-        ) { navBackStackEntry ->
-            PlayerDetailScreen(
-                navController = navController,
-                playerId = navBackStackEntry.arguments?.getString("playerId")!!
-            )
+        ) {
+            PlayerDetailScreen()
         }
         composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
         composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
