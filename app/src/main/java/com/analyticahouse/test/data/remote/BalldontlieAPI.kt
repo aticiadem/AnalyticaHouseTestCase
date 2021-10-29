@@ -12,13 +12,13 @@ interface BalldontlieAPI {
     @GET("teams")
     suspend fun getAllTeams(): TeamModel
 
-    @GET("teams/{<ID>}")
-    suspend fun getSelectedTeam(@Path("<ID>") teamId: String): Team
+    @GET("teams/{ID}")
+    suspend fun getSelectedTeam(@Path("ID") teamId: String): Team
 
     @GET("players")
     suspend fun getAllPlayers(): PlayerModel
 
-    @GET("players/{<ID>}")
-    suspend fun getSelectedPlayer(@Path("<ID>") playerId: String): Player
+    @GET("players/{ID}")
+    suspend fun getSelectedPlayer(@Path("ID") playerId: String): Player
 
 }

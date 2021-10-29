@@ -109,11 +109,8 @@ fun AppNavHost(navController: NavHostController) {
                     defaultValue = "1"
                 }
             )
-        ) { navBackStackEntry ->
-            TeamDetailScreen(
-                navController = navController,
-                teamId = navBackStackEntry.arguments?.getString("teamId")!!
-            )
+        ) {
+            TeamDetailScreen()
         }
         composable(Screen.PlayersScreen.route) { PlayersScreen(navController = navController) }
         composable(
