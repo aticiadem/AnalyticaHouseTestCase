@@ -2,7 +2,11 @@ package com.analyticahouse.test.presentation.screens.team
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +49,18 @@ fun TeamDetailScreen(
                 Text(text = "Conference : ${it.conference}", fontSize = 18.sp)
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(text = "Abbreviation : ${it.abbreviation}", fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(20.dp))
+                IconButton(
+                    onClick = {
+                        // add this player to the database
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp)
+                    )
+                }
             }
         }
         if (state.error.isNotBlank()) {

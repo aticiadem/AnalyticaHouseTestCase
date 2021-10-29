@@ -118,14 +118,11 @@ fun AppNavHost(navController: NavHostController) {
             arguments = listOf(
                 navArgument("playerId") {
                     type = NavType.StringType
-                    defaultValue = "2"
+                    defaultValue = "14"
                 }
             )
-        ) { navBackStackEntry ->
-            PlayerDetailScreen(
-                navController = navController,
-                playerId = navBackStackEntry.arguments?.getString("playerId")!!
-            )
+        ) {
+            PlayerDetailScreen()
         }
         composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
         composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
