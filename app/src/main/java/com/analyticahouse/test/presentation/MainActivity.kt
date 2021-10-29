@@ -34,6 +34,7 @@ import com.analyticahouse.test.presentation.screens.team.TeamsScreen
 import com.analyticahouse.test.presentation.ui.theme.AnalyticaHouseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(navController: NavHostController) {
     Scaffold(
@@ -94,6 +96,7 @@ fun AppBottomBar(navController: NavController) {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun AppNavHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.TeamsScreen.route) {
