@@ -3,6 +3,7 @@ package com.analyticahouse.test.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -11,16 +12,14 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.analyticahouse.test.presentation.navigation.BottomBarItem
 import com.analyticahouse.test.presentation.navigation.Screen
 import com.analyticahouse.test.presentation.screens.common.AppTopBar
@@ -64,7 +63,7 @@ fun MainScreen(navController: NavHostController) {
 }
 
 @Composable
-fun AppBottomBar(navController: NavController) {
+fun AppBottomBar(navController: NavHostController) {
     BottomNavigation {
         val items = listOf(
             BottomBarItem("Teams", Screen.TeamsScreen.route, Icons.Default.List),
@@ -75,23 +74,14 @@ fun AppBottomBar(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        items.forEach { screen ->
-            BottomNavigationItem(
-                icon = { Icon(screen.icon, contentDescription = null) },
-                label = { Text(text = screen.name) },
-                selectedContentColor = Color.Red,
-                unselectedContentColor = Color.White,
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = {
-                    navController.navigate(screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
+        BottomNavigation {
+            items.forEach { screen ->
+                AddItem(
+                    screen = screen,
+                    currentDestination = currentDestination,
+                    navController = navController
+                )
+            }
         }
     }
 }
@@ -101,31 +91,42 @@ fun AppBottomBar(navController: NavController) {
 fun AppNavHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.TeamsScreen.route) {
         composable(Screen.TeamsScreen.route) { TeamsScreen(navController = navController) }
-        composable(
-            route = Screen.TeamDetailScreen.route + "/{teamId}",
-            arguments = listOf(
-                navArgument("teamId") {
-                    type = NavType.StringType
-                    defaultValue = "1"
-                }
-            )
-        ) {
+        composable(route = Screen.TeamDetailScreen.route + "/{teamId}") {
             TeamDetailScreen()
         }
         composable(Screen.PlayersScreen.route) { PlayersScreen(navController = navController) }
-        composable(
-            route = Screen.PlayerDetailScreen.route + "/{playerId}",
-            arguments = listOf(
-                navArgument("playerId") {
-                    type = NavType.StringType
-                    defaultValue = "14"
-                }
-            )
-        ) {
+        composable(route = Screen.PlayerDetailScreen.route + "/{playerId}") {
             PlayerDetailScreen()
         }
         composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
         composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
         composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen(navController = navController) }
     }
+}
+
+@Composable
+fun RowScope.AddItem(
+    screen: BottomBarItem,
+    currentDestination: NavDestination?,
+    navController: NavHostController
+) {
+    BottomNavigationItem(
+        label = {
+            Text(text = screen.name)
+        },
+        icon = {
+            Icon(imageVector = screen.icon, contentDescription = null)
+        },
+        selected = currentDestination?.hierarchy?.any {
+            it.route == screen.route
+        } == true,
+        unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+        selectedContentColor = Color.White,
+        onClick = {
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id)
+                launchSingleTop = true
+            }
+        }
+    )
 }
