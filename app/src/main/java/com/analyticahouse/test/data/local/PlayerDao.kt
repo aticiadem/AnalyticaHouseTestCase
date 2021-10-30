@@ -20,6 +20,6 @@ interface PlayerDao {
     @Delete
     suspend fun deletePlayer(player: PlayerEntity)
 
-    @Query("DELETE FROM team_table")
+    @Query("DELETE FROM player_table")
     suspend fun deleteAllFavoritePlayers()
 }

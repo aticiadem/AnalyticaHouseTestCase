@@ -11,9 +11,9 @@ data class PlayerEntity(
     @SerializedName("first_name")
     val firstName: String,
     @SerializedName("height_feet")
-    val heightFeet: Any?,
+    val heightFeet: String,
     @SerializedName("height_inches")
-    val heightInches: Any?,
+    val heightInches: String,
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     val id: Int = 0,
