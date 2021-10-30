@@ -1,17 +1,20 @@
 package com.analyticahouse.test.data.local.repository
 
+import androidx.lifecycle.LiveData
 import com.analyticahouse.test.data.local.PlayerDao
 import com.analyticahouse.test.data.local.model.PlayerEntity
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@ViewModelScoped
 class PlayerRepository @Inject constructor(
     private val playerDao: PlayerDao
 ) {
 
-    val getAllFavoritePlayers: Flow<List<PlayerEntity>> = playerDao.getAllFavoritePlayers()
+    val getAllFavoritePlayers: LiveData<List<PlayerEntity>> = playerDao.getAllFavoritePlayers()
 
-    fun getSelectedFavoritePlayer(playerId: Int): Flow<PlayerEntity> {
+    fun getSelectedFavoritePlayer(playerId: Int): PlayerEntity {
         return playerDao.getSelectedPlayer(playerId = playerId)
     }
 

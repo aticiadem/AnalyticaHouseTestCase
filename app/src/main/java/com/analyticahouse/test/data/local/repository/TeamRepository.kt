@@ -1,17 +1,19 @@
 package com.analyticahouse.test.data.local.repository
 
+import androidx.lifecycle.LiveData
 import com.analyticahouse.test.data.local.TeamDao
 import com.analyticahouse.test.domain.model.team.Team
-import kotlinx.coroutines.flow.Flow
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
+@ViewModelScoped
 class TeamRepository @Inject constructor(
     private val teamDao: TeamDao
 ) {
 
-    val getAllFavoriteTeams: Flow<List<Team>> = teamDao.getAllFavoriteTeams()
+    val getAllFavoriteTeams: LiveData<List<Team>> = teamDao.getAllFavoriteTeams()
 
-    fun getSelectedFavoriteTeam(teamId: Int): Flow<Team> {
+    fun getSelectedFavoriteTeam(teamId: Int): Team {
         return teamDao.getSelectedTeam(teamId = teamId)
     }
 
