@@ -17,7 +17,5 @@ data class Player(
     @SerializedName("position")
     val position: String,
     @SerializedName("team")
-    val team: Team,
-    @SerializedName("weight_pounds")
-    val weightPounds: Any?
+    val team: Team
 )
