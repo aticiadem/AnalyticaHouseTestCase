@@ -1,5 +1,6 @@
 package com.analyticahouse.test.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.analyticahouse.test.common.Constants.PLAYER_TABLE
@@ -29,5 +30,7 @@ data class PlayerEntity(
     @SerializedName("division")
     val division: String,
     @SerializedName("full_name")
-    val fullName: String
+    val fullName: String,
+    @ColumnInfo(name = "isFavorite")
+    var isFavorite: Boolean = false
 )

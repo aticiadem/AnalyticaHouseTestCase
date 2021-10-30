@@ -1,5 +1,6 @@
 package com.analyticahouse.test.domain.model.team
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.analyticahouse.test.common.Constants.TEAM_TABLE
@@ -21,5 +22,7 @@ data class Team(
     @SerializedName("id")
     val id: Int = 0,
     @SerializedName("name")
-    val name: String
+    val name: String,
+    @ColumnInfo(name = "is_favorite")
+    var isFavorite: Boolean = false
 )
