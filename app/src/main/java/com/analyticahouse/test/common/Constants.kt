@@ -7,4 +7,10 @@ object Constants {
     const val PARAM_TEAM_ID = "teamId"
     const val PARAM_PLAYER_ID = "playerId"
 
+    const val TEAM_TABLE = "team_table"
+    const val TEAM_DATABASE = "team_database"
+
+    const val PLAYER_TABLE = "player_table"
+    const val PLAYER_DATABASE = "player_database"
+
 }

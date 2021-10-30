@@ -1,7 +1,12 @@
 package com.analyticahouse.test.domain.model.team
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.analyticahouse.test.common.Constants.TEAM_TABLE
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = TEAM_TABLE)
 data class Team(
     @SerializedName("abbreviation")
     val abbreviation: String,
@@ -13,8 +18,11 @@ data class Team(
     val division: String,
     @SerializedName("full_name")
     val fullName: String,
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
     @SerializedName("name")
-    val name: String
+    val name: String,
+    @ColumnInfo(name = "is_favorite")
+    var isFavorite: Boolean = false
 )
