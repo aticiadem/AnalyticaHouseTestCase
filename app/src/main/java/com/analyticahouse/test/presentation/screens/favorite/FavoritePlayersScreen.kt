@@ -42,8 +42,6 @@ fun FavoritePlayersScreen(
             verticalArrangement = Arrangement.Top
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .wrapContentHeight(),
                 contentPadding = PaddingValues(10.dp)
             ) {
                 items(favoritePlayers) { player ->
@@ -55,6 +53,7 @@ fun FavoritePlayersScreen(
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
             Button(onClick = {
                 viewModelDatabase.deleteAllFavoritePlayer()
                 Toast.makeText(context, "Deleted All Players", Toast.LENGTH_SHORT).show()
@@ -74,6 +73,7 @@ fun FavoritePlayersRow(item: PlayerEntity, context: Context, onClick: () -> Unit
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .padding(top = 10.dp)
     ) {
         Card(
             modifier = Modifier
