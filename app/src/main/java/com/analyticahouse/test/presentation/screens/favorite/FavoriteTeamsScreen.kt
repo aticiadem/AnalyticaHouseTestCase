@@ -28,13 +28,14 @@ fun FavoriteTeamsScreen(
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        Box(
+        Column(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .wrapContentHeight(),
                 contentPadding = PaddingValues(20.dp)
             ) {
                 items(favoriteTeams) { team ->
@@ -48,7 +49,7 @@ fun FavoriteTeamsScreen(
             }
             Button(onClick = {
                 viewModel.deleteAllFavoriteTeam()
-                Toast.makeText(context, "Deleted all item", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Deleted All Teams", Toast.LENGTH_SHORT).show()
             }) {
                 Text(text = "Delete All")
             }

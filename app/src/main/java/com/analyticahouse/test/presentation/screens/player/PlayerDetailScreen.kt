@@ -1,5 +1,6 @@
 package com.analyticahouse.test.presentation.screens.player
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -11,19 +12,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.analyticahouse.test.data.local.model.PlayerEntity
+import com.analyticahouse.test.presentation.screens.favorite.FavoritePlayersViewModel
 
 @Composable
 fun PlayerDetailScreen(
-    viewModel: PlayerDetailViewModel = hiltViewModel()
+    viewModel: PlayerDetailViewModel = hiltViewModel(),
+    viewModelDatabase: FavoritePlayersViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     val player = state.player
     val team = state.player?.team
+
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -64,13 +71,49 @@ fun PlayerDetailScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 IconButton(
                     onClick = {
-                        // add this player to the database
+                        if (player.heightFeet != null && player.heightInches != null){
+                            viewModelDatabase.addFavoritePlayer(
+                                player = PlayerEntity(
+                                    player.firstName,
+                                    player.heightFeet.toString(),
+                                    player.heightInches.toString(),
+                                    player.id,
+                                    player.lastName,
+                                    player.position,
+                                    player.team.abbreviation,
+                                    player.team.city,
+                                    player.team.conference,
+                                    player.team.division,
+                                    player.team.fullName,
+                                    true
+                                )
+                            )
+                        } else {
+                            viewModelDatabase.addFavoritePlayer(
+                                player = PlayerEntity(
+                                    player.firstName,
+                                    "null",
+                                    "null",
+                                    player.id,
+                                    player.lastName,
+                                    player.position,
+                                    player.team.abbreviation,
+                                    player.team.city,
+                                    player.team.conference,
+                                    player.team.division,
+                                    player.team.fullName,
+                                    true
+                                )
+                            )
+                        }
+                        Toast.makeText(context, "Added To Favorite", Toast.LENGTH_SHORT).show()
                     }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = null,
-                        modifier = Modifier.size(64.dp)
+                        modifier = Modifier.size(64.dp),
+                        tint = Color.Red
                     )
                 }
             }
