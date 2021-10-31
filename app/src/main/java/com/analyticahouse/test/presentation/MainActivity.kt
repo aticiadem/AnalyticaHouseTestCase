@@ -99,8 +99,8 @@ fun AppNavHost(navController: NavHostController) {
             PlayerDetailScreen()
         }
         composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
-        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
-        composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen(navController = navController) }
+        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen() }
+        composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen() }
     }
 }
 

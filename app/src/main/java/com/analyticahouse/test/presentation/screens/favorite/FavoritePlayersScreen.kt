@@ -8,10 +8,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 
 @Composable
-fun FavoritePlayersScreen(navController: NavController) {
+fun FavoritePlayersScreen(
+    viewModelDatabase: FavoritePlayersViewModel = hiltViewModel()
+) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {

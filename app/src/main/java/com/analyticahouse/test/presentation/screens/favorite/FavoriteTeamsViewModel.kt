@@ -1,6 +1,8 @@
 package com.analyticahouse.test.presentation.screens.favorite
 
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.analyticahouse.test.data.local.repository.TeamRepository
@@ -8,6 +10,7 @@ import com.analyticahouse.test.domain.model.team.Team
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,8 +18,24 @@ class FavoriteTeamsViewModel @Inject constructor(
     private val teamRepository: TeamRepository
 ) : ViewModel() {
 
-    val getAllFavoriteTeams: LiveData<List<Team>> =
-        teamRepository.getAllFavoriteTeams
+    private val _favoriteTeamList: MutableState<List<Team>> = mutableStateOf(emptyList())
+
+    val favoriteTeamList: State<List<Team>>
+        get() = _favoriteTeamList
+
+    init {
+        viewModelScope.launch {
+            try {
+                _favoriteTeamList.value = getAllFavoriteTeams()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private suspend fun getAllFavoriteTeams(): List<Team> {
+        return teamRepository.getAllFavoriteTeams()
+    }
 
     fun getSelectedTeam(teamId: Int): Team {
         return teamRepository.getSelectedFavoriteTeam(teamId = teamId)
@@ -25,12 +44,6 @@ class FavoriteTeamsViewModel @Inject constructor(
     fun addFavoriteTeam(team: Team) {
         viewModelScope.launch(Dispatchers.IO) {
             teamRepository.addTeam(team = team)
-        }
-    }
-
-    fun updateFavoriteTeam(team: Team) {
-        viewModelScope.launch(Dispatchers.IO) {
-            teamRepository.updateTeam(team = team)
         }
     }
 
