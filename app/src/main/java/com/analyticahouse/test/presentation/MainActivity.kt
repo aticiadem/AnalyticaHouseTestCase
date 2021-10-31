@@ -3,6 +3,7 @@ package com.analyticahouse.test.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,7 @@ import com.analyticahouse.test.presentation.screens.team.TeamsScreen
 import com.analyticahouse.test.presentation.ui.theme.AnalyticaHouseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -47,6 +49,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun MainScreen(navController: NavHostController) {
@@ -86,6 +89,7 @@ fun AppBottomBar(navController: NavHostController) {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun AppNavHost(navController: NavHostController) {
@@ -99,8 +103,8 @@ fun AppNavHost(navController: NavHostController) {
             PlayerDetailScreen()
         }
         composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
-        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen(navController) }
-        composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen(navController = navController) }
+        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen() }
+        composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen() }
     }
 }
 
