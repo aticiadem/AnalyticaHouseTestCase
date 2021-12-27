@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -12,6 +14,7 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -60,8 +63,10 @@ fun MainScreen(navController: NavHostController) {
         topBar = {
             AppTopBar()
         }
-    ) {
-        AppNavHost(navController = navController)
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            AppNavHost(navController = navController)
+        }
     }
 }
 
@@ -112,7 +117,7 @@ fun AppNavHost(navController: NavHostController) {
 fun RowScope.AddItem(
     screen: BottomBarItem,
     currentDestination: NavDestination?,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     BottomNavigationItem(
         label = {
