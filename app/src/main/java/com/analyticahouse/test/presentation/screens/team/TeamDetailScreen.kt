@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,13 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.analyticahouse.test.domain.model.team.Team
+import com.analyticahouse.test.presentation.navigation.Screen
 import com.analyticahouse.test.presentation.screens.favorite.FavoriteTeamsViewModel
 
 @Composable
 fun TeamDetailScreen(
+    currentScreen: MutableState<String>,
     viewModelTeamDetail: TeamDetailViewModel = hiltViewModel(),
     viewModelDatabase: FavoriteTeamsViewModel = hiltViewModel()
 ) {
+    currentScreen.value = Screen.TeamsScreen.route
     val state = viewModelTeamDetail.state.value
     val team = state.team
     val context = LocalContext.current

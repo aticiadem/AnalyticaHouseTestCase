@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,8 +24,10 @@ import com.analyticahouse.test.presentation.ui.theme.Purple500
 @Composable
 fun PlayersScreen(
     navController: NavController,
-    viewModel: PlayersViewModel = hiltViewModel()
+    currentScreen: MutableState<String>,
+    viewModel: PlayersViewModel = hiltViewModel(),
 ) {
+    currentScreen.value = Screen.PlayersScreen.route
     val state = viewModel.state.value
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -58,7 +61,7 @@ fun PlayersScreen(
 @Composable
 fun PlayerCard(
     item: Player,
-    onItemClick: (Player) -> Unit
+    onItemClick: (Player) -> Unit,
 ) {
     Surface(
         modifier = Modifier
