@@ -13,7 +13,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
@@ -46,7 +49,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             AnalyticaHouseTheme {
                 val navController = rememberNavController()
-                MainScreen(navController = navController)
+                val currentScreen = rememberSaveable { (mutableStateOf(Screen.TeamsScreen.route)) }
+
+                MainScreen(navController = navController, currentScreen = currentScreen)
             }
         }
     }
@@ -55,23 +60,32 @@ class MainActivity : ComponentActivity() {
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(
+    navController: NavHostController,
+    currentScreen: MutableState<String>,
+) {
     Scaffold(
         bottomBar = {
-            AppBottomBar(navController = navController)
+            AppBottomBar(navController = navController, currentScreen = currentScreen)
         },
         topBar = {
             AppTopBar()
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            AppNavHost(navController = navController)
+            AppNavHost(
+                navController = navController,
+                currentScreen = currentScreen
+            )
         }
     }
 }
 
 @Composable
-fun AppBottomBar(navController: NavHostController) {
+fun AppBottomBar(
+    navController: NavHostController,
+    currentScreen: MutableState<String>,
+) {
     BottomNavigation {
         val items = listOf(
             BottomBarItem("Teams", Screen.TeamsScreen.route, Icons.Default.List),
@@ -87,7 +101,8 @@ fun AppBottomBar(navController: NavHostController) {
                 AddItem(
                     screen = screen,
                     currentDestination = currentDestination,
-                    navController = navController
+                    navController = navController,
+                    currentScreen = currentScreen
                 )
             }
         }
@@ -97,19 +112,41 @@ fun AppBottomBar(navController: NavHostController) {
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun AppNavHost(navController: NavHostController) {
+fun AppNavHost(
+    navController: NavHostController,
+    currentScreen: MutableState<String>,
+) {
     NavHost(navController = navController, startDestination = Screen.TeamsScreen.route) {
-        composable(Screen.TeamsScreen.route) { TeamsScreen(navController = navController) }
-        composable(route = Screen.TeamDetailScreen.route + "/{teamId}") {
-            TeamDetailScreen()
+        composable(Screen.TeamsScreen.route) {
+            TeamsScreen(
+                navController = navController,
+                currentScreen = currentScreen
+            )
         }
-        composable(Screen.PlayersScreen.route) { PlayersScreen(navController = navController) }
+        composable(route = Screen.TeamDetailScreen.route + "/{teamId}") {
+            TeamDetailScreen(currentScreen = currentScreen)
+        }
+        composable(Screen.PlayersScreen.route) {
+            PlayersScreen(
+                navController = navController,
+                currentScreen = currentScreen
+            )
+        }
         composable(route = Screen.PlayerDetailScreen.route + "/{playerId}") {
             PlayerDetailScreen()
         }
-        composable(Screen.FavoritesScreen.route) { FavoritesScreen(navController = navController) }
-        composable(Screen.FavoriteTeamsScreen.route) { FavoriteTeamsScreen() }
-        composable(Screen.FavoritePlayersScreen.route) { FavoritePlayersScreen() }
+        composable(Screen.FavoritesScreen.route) {
+            FavoritesScreen(
+                navController = navController,
+                currentScreen = currentScreen
+            )
+        }
+        composable(Screen.FavoriteTeamsScreen.route) {
+            FavoriteTeamsScreen()
+        }
+        composable(Screen.FavoritePlayersScreen.route) {
+            FavoritePlayersScreen()
+        }
     }
 }
 
@@ -118,6 +155,7 @@ fun RowScope.AddItem(
     screen: BottomBarItem,
     currentDestination: NavDestination?,
     navController: NavHostController,
+    currentScreen: MutableState<String>,
 ) {
     BottomNavigationItem(
         label = {
@@ -127,7 +165,7 @@ fun RowScope.AddItem(
             Icon(imageVector = screen.icon, contentDescription = null)
         },
         selected = currentDestination?.hierarchy?.any {
-            it.route == screen.route
+            currentScreen.value == screen.route
         } == true,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         selectedContentColor = Color.White,
